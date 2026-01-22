@@ -72,12 +72,12 @@ export default function Live() {
   const [hoveredShow, setHoveredShow] = useState<number | null>(null);
 
   return (
-    <div className="max-w-6xl mx-auto py-12 min-h-[80vh]">
+    <div className="max-w-6xl mx-auto py-12 min-h-[80vh] px-4 md:px-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="mb-16 flex flex-col md:flex-row justify-between items-end gap-6"
+        className="mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6"
       >
         <div>
           <h1 className="text-5xl md:text-8xl font-black tracking-tighter uppercase mb-2">
@@ -110,7 +110,7 @@ export default function Live() {
           >
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 px-4">
               {/* Date */}
-              <div className="flex flex-col w-32 shrink-0">
+              <div className="flex flex-row md:flex-col items-baseline gap-4 md:gap-0 w-full md:w-32 shrink-0">
                 <span className="text-3xl font-bold tracking-tighter group-hover:text-white transition-colors text-neutral-300">
                   {show.date}
                 </span>
@@ -118,7 +118,7 @@ export default function Live() {
               </div>
 
               {/* Venue & Location */}
-              <div className="flex-grow space-y-1">
+              <div className="flex-grow space-y-1 w-full md:w-auto">
                 <h3 className="text-2xl md:text-4xl font-bold uppercase tracking-tight text-white group-hover:translate-x-2 transition-transform duration-300">
                   {show.venue}
                 </h3>
@@ -148,7 +148,7 @@ export default function Live() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className={cn(
-                    "flex items-center gap-2 px-6 py-3 rounded-full font-bold uppercase tracking-wider text-sm transition-all",
+                    "flex items-center gap-2 px-6 py-3 rounded-full font-bold uppercase tracking-wider text-sm transition-all whitespace-nowrap",
                     show.status === "sold_out"
                       ? "bg-neutral-800 text-neutral-500 cursor-not-allowed"
                       : "bg-white text-black hover:bg-neutral-200"

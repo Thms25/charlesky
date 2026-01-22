@@ -11,6 +11,8 @@ function ParallaxImage({ src, alt, className, yOffset = 50 }: { src: string; alt
     offset: ["start end", "end start"]
   });
   
+  // Disable parallax on small screens (can be done via CSS or JS, here effectively JS logic could be added but simpler is CSS handling or just keeping it subtle)
+  // For simplicity, we keep the effect as it usually works okay if container handles overflow
   const y = useTransform(scrollYProgress, [0, 1], [0, -yOffset]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
@@ -88,53 +90,69 @@ export default function Bio() {
       </div>
 
       {/* Parallax Gallery Section */}
-      <div className="max-w-7xl mx-auto px-6 relative min-h-[150vh]">
+      {/* Changed: Stacked layout on mobile, Absolute/Parallax on Desktop */}
+      <div className="max-w-7xl mx-auto px-6 relative flex flex-col md:block gap-20 md:gap-0 min-h-auto md:min-h-[150vh]">
         
-        {/* Image 1 - Left */}
-        <div className="absolute left-0 top-0 w-72 md:w-96 aspect-[4/5] z-10">
+        {/* Item 1 */}
+        <div className="relative md:absolute md:left-0 md:top-0 w-full md:w-96 aspect-[4/5] z-10">
              <ParallaxImage 
                 src="https://images.unsplash.com/photo-1598653222000-6b7b7a552625?q=80&w=2070&auto=format&fit=crop"
                 alt="Studio Gear"
                 yOffset={100}
              />
+             {/* Mobile Text */}
+             <div className="block md:hidden mt-6 text-center">
+                <h3 className="text-2xl font-bold mb-2 text-white">Analog Soul</h3>
+                <p className="text-neutral-400">Where vintage hardware meets modern workflow.</p>
+             </div>
         </div>
 
-        {/* Text 1 - Right */}
-        <div className="absolute right-10 top-40 max-w-sm text-right z-20">
+        {/* Desktop Text 1 */}
+        <div className="hidden md:block absolute right-10 top-40 max-w-sm text-right z-20">
             <FloatingText delay={0.2}>
                 <h3 className="text-3xl font-bold mb-2 text-white">Analog Soul</h3>
                 <p className="text-neutral-400">Where vintage hardware meets modern workflow.</p>
             </FloatingText>
         </div>
 
-        {/* Image 2 - Center Right */}
-        <div className="absolute right-10 md:right-20 top-[600px] w-80 md:w-[500px] aspect-video z-10">
+        {/* Item 2 */}
+        <div className="relative md:absolute md:right-20 md:top-[600px] w-full md:w-[500px] aspect-video z-10">
             <ParallaxImage 
                 src="https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=2079&auto=format&fit=crop"
                 alt="Live Performance"
                 yOffset={-50}
             />
+            {/* Mobile Text */}
+            <div className="block md:hidden mt-6 text-center">
+                <h3 className="text-2xl font-bold mb-2 text-white">Live Energy</h3>
+                <p className="text-neutral-400">Translating studio perfection to the stage.</p>
+            </div>
         </div>
 
-        {/* Text 2 - Left */}
-        <div className="absolute left-10 md:left-32 top-[500px] max-w-sm z-20">
+        {/* Desktop Text 2 */}
+        <div className="hidden md:block absolute left-32 top-[500px] max-w-sm z-20">
              <FloatingText delay={0.3}>
                 <h3 className="text-3xl font-bold mb-2 text-white">Live Energy</h3>
                 <p className="text-neutral-400">Translating studio perfection to the stage.</p>
             </FloatingText>
         </div>
 
-        {/* Image 3 - Bottom Left */}
-        <div className="absolute left-10 bottom-0 w-64 md:w-80 aspect-square z-10">
+        {/* Item 3 */}
+        <div className="relative md:absolute md:left-10 md:bottom-0 w-full md:w-80 aspect-square z-10">
              <ParallaxImage 
                 src="https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=2070&auto=format&fit=crop"
                 alt="Mixing Console"
                 yOffset={80}
              />
+             {/* Mobile Text */}
+             <div className="block md:hidden mt-6 text-center">
+                <h3 className="text-2xl font-bold mb-2 text-white">Sonic Precision</h3>
+                <p className="text-neutral-400">Every detail matters in the final mix.</p>
+            </div>
         </div>
          
-         {/* Text 3 - Bottom Right */}
-         <div className="absolute right-10 md:right-40 bottom-40 max-w-sm text-right z-20">
+         {/* Desktop Text 3 */}
+         <div className="hidden md:block absolute right-40 bottom-40 max-w-sm text-right z-20">
              <FloatingText delay={0.4}>
                 <h3 className="text-3xl font-bold mb-2 text-white">Sonic Precision</h3>
                 <p className="text-neutral-400">Every detail matters in the final mix.</p>

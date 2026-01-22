@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useRef, useState, useEffect } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Text3D, Center, Float, Environment } from "@react-three/drei";
 import { useScroll, useTransform, motion } from "framer-motion";
 import * as THREE from "three";
@@ -9,6 +9,10 @@ import * as THREE from "three";
 function Scene() {
   const meshRef = useRef<THREE.Group>(null);
   const { scrollYProgress } = useScroll();
+  const { viewport } = useThree();
+  
+  // Responsive scale based on viewport width
+  const scale = viewport.width < 5 ? viewport.width / 8 : 1;
 
   // "Fall back" effect: Map scrollYProgress to rotation
   const rotateX = useTransform(scrollYProgress, [0, 0.5], [0, -Math.PI / 2]);
@@ -22,7 +26,7 @@ function Scene() {
   });
 
   return (
-    <group ref={meshRef}>
+    <group ref={meshRef} scale={scale}>
       <Center>
         <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
           <Text3D
@@ -47,7 +51,7 @@ function Scene() {
 
 export function Title3D() {
   return (
-    <div className="w-full h-[400px] md:h-[500px] flex items-center justify-center pointer-events-none">
+    <div className="w-full h-[300px] md:h-[500px] flex items-center justify-center pointer-events-none">
       <Canvas shadows camera={{ position: [0, 0, 5], fov: 45 }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1.5} />
