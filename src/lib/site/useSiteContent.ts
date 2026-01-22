@@ -29,6 +29,30 @@ export function useSiteContent() {
           data: {
             ...defaultSiteContent,
             ...data,
+            home: {
+              ...defaultSiteContent.home,
+              ...(data.home || {}),
+              latestRelease: {
+                ...defaultSiteContent.home.latestRelease,
+                ...(data.home?.latestRelease || {}),
+              },
+            },
+            bio: {
+              ...defaultSiteContent.bio,
+              ...(data.bio || {}),
+            },
+            live: {
+              ...defaultSiteContent.live,
+              ...(data.live || {}),
+            },
+            work: {
+              ...defaultSiteContent.work,
+              ...(data.work || {}),
+            },
+            contact: {
+              ...defaultSiteContent.contact,
+              ...(data.contact || {}),
+            },
           } as SiteContent,
         });
       },
@@ -49,4 +73,3 @@ export function useSiteContent() {
 
   return { ...state, actions };
 }
-

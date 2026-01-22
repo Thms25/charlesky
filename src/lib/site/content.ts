@@ -4,11 +4,13 @@ export type SiteContent = {
     latestRelease: {
       title: string;
       description: string;
-      spotifyEmbedUrl: string;
+      audioSrc: string;
+      artworkSrc?: string;
     };
   };
   bio: {
     headline: string;
+    headerImage: string;
     paragraphs: string[];
     gallery: Array<{
       src: string;
@@ -39,6 +41,8 @@ export type SiteContent = {
       artist: string;
       role: string;
       color: string;
+      audioSrc?: string;
+      artworkSrc?: string;
     }>;
   };
   contact: {
@@ -60,12 +64,13 @@ export const defaultSiteContent: SiteContent = {
       title: "QQSP",
       description:
         "The latest drop from Basement Mixtape, Vol. 1. Featuring Basement, NIZ, Moon's, Benito Bxl, and Lookaa. A raw mix of energy and style.",
-      spotifyEmbedUrl:
-        "https://open.spotify.com/embed/track/2DSbT4h3BA1oIWXC9N0AG5?utm_source=generator&theme=0",
+      audioSrc: "", // Default empty, user needs to upload
+      artworkSrc: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=2070&auto=format&fit=crop",
     },
   },
   bio: {
     headline: "BEHIND THE CONSOLE",
+    headerImage: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop",
     paragraphs: [
       "Charlesky is a music producer and mixing engineer based in Brussels. With a passion for analog warmth and digital precision, he crafts soundscapes that resonate.",
       "Specializing in Synthwave, Electronic, and Pop, his approach combines technical expertise with artistic intuition to bring every artist's vision to life.",

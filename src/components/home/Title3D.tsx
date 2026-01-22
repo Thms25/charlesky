@@ -1,64 +1,34 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Text3D, Center, Float, Environment } from "@react-three/drei";
-import { useScroll, useTransform, motion } from "framer-motion";
-import * as THREE from "three";
+import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
-function Scene() {
-  const meshRef = useRef<THREE.Group>(null);
-  const { scrollYProgress } = useScroll();
-  const { viewport } = useThree();
-  
-  // Responsive scale based on viewport width
-  const scale = viewport.width < 5 ? viewport.width / 8 : 1;
-
-  // "Fall back" effect: Map scrollYProgress to rotation
-  const rotateX = useTransform(scrollYProgress, [0, 0.5], [0, -Math.PI / 2]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-  useFrame(() => {
-    if (meshRef.current) {
-        meshRef.current.rotation.x = rotateX.get();
-        // meshRef.current.position.z = z.get(); // Removed Z movement
-    }
-  });
-
-  return (
-    <group ref={meshRef} scale={scale}>
-      <Center>
-        <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
-          <Text3D
-            font="/fonts/helvetiker_regular.typeface.json"
-            size={1}
-            height={0.2}
-            curveSegments={12}
-            bevelEnabled
-            bevelThickness={0.02}
-            bevelSize={0.02}
-            bevelOffset={0}
-            bevelSegments={5}
-          >
-            CHARLESKY
-            <meshStandardMaterial color="white" roughness={0.3} metalness={0.8} />
-          </Text3D>
-        </Float>
-      </Center>
-    </group>
-  );
-}
+// Dynamic import with ssr disabled to prevent WebGL context loss on Next.js navigation
+const Title3DClient = dynamic(() => import("./Title3DClient").then(mod => ({ default: mod.Title3DClient })), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[300px] md:h-[500px] flex items-center justify-center pointer-events-none">
+      <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-wider text-white" style={{ 
+        fontFamily: 'system-ui, -apple-system, sans-serif',
+        letterSpacing: '0.05em',
+        textShadow: '0 0 20px rgba(255,255,255,0.3)'
+      }}>
+        CHARLESKY
+      </h1>
+    </div>
+  ),
+});
 
 export function Title3D() {
-  return (
-    <div className="w-full h-[300px] md:h-[500px] flex items-center justify-center pointer-events-none">
-      <Canvas shadows camera={{ position: [0, 0, 5], fov: 45 }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1.5} />
-        <spotLight position={[-10, 10, 5]} intensity={1} angle={0.5} penumbra={1} />
-        <Environment preset="city" />
-        <Scene />
-      </Canvas>
-    </div>
-  );
+  const pathname = usePathname();
+  const [resetKey, setResetKey] = useState(0);
+
+  // Force a complete unmount/remount of the 3D scene whenever the path changes (navigating back to home)
+  // or when the component mounts.
+  useEffect(() => {
+    setResetKey(prev => prev + 1);
+  }, [pathname]);
+
+  return <Title3DClient key={`${pathname}-${resetKey}`} />;
 }

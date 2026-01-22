@@ -7,8 +7,6 @@ import { Title3D } from "./Title3D";
 import { SiteContent } from "@/lib/site/content";
 
 export function Hero({ data }: { data: SiteContent }) {
-
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen relative overflow-hidden">
       <div className="absolute inset-0 -z-10 overflow-hidden">

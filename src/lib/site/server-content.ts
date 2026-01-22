@@ -24,11 +24,31 @@ export async function getSiteContent(): Promise<SiteContent> {
     return {
       ...defaultSiteContent,
       ...data,
-      home: { ...defaultSiteContent.home, ...(data.home || {}) },
-      bio: { ...defaultSiteContent.bio, ...(data.bio || {}) },
-      live: { ...defaultSiteContent.live, ...(data.live || {}) },
-      work: { ...defaultSiteContent.work, ...(data.work || {}) },
-      contact: { ...defaultSiteContent.contact, ...(data.contact || {}) },
+      home: {
+        ...defaultSiteContent.home,
+        ...(data.home || {}),
+        latestRelease: {
+          ...defaultSiteContent.home.latestRelease,
+          ...(data.home?.latestRelease || {}),
+        },
+      },
+      bio: {
+        ...defaultSiteContent.bio,
+        ...(data.bio || {}),
+        // Arrays like paragraphs/gallery are overwritten by Firestore if they exist
+      },
+      live: {
+        ...defaultSiteContent.live,
+        ...(data.live || {}),
+      },
+      work: {
+        ...defaultSiteContent.work,
+        ...(data.work || {}),
+      },
+      contact: {
+        ...defaultSiteContent.contact,
+        ...(data.contact || {}),
+      },
     } as SiteContent;
   } catch (error) {
     console.error("Failed to fetch site content:", error);
