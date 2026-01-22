@@ -1,8 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { SiteContent } from "@/lib/site/content";
 
-export function LatestRelease() {
+export function LatestRelease({ data }: { data: SiteContent }) {
+
+
   return (
     <section className="min-h-screen flex flex-col justify-center py-20 relative">
       <div className="absolute inset-0 -z-10 bg-linear-to-b from-black via-purple-900/10 to-black" />
@@ -23,7 +26,7 @@ export function LatestRelease() {
                       viewport={{ once: true }}
                       className="text-5xl md:text-7xl font-bold mb-6 tracking-tighter"
                   >
-                      QQSP
+                      {data.home.latestRelease.title}
                   </motion.h2>
                   <motion.p 
                       initial={{ opacity: 0 }}
@@ -32,9 +35,7 @@ export function LatestRelease() {
                       transition={{ delay: 0.2 }}
                       className="text-xl text-neutral-400 mb-8 leading-relaxed"
                   >
-                      The latest drop from Basement Mixtape, Vol. 1. 
-                      Featuring Basement, NIZ, Moon&apos;s, Benito Bxl, and Lookaa.
-                      A raw mix of energy and style.
+                      {data.home.latestRelease.description}
                   </motion.p>
                   
                   {/* Additional info or buttons could go here, but the player is the focus */}
@@ -50,7 +51,7 @@ export function LatestRelease() {
                   >
                     <iframe 
                       style={{ borderRadius: "12px" }} 
-                      src="https://open.spotify.com/embed/track/2DSbT4h3BA1oIWXC9N0AG5?utm_source=generator&theme=0" 
+                      src={data.home.latestRelease.spotifyEmbedUrl}
                       width="100%" 
                       height="352" 
                       frameBorder="0" 

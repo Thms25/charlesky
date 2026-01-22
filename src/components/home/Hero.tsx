@@ -4,8 +4,11 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Title3D } from "./Title3D";
+import { SiteContent } from "@/lib/site/content";
 
-export function Hero() {
+export function Hero({ data }: { data: SiteContent }) {
+
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen relative overflow-hidden">
       <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -25,7 +28,7 @@ export function Hero() {
         </div>
 
         <p className="text-xl md:text-2xl font-light tracking-widest text-white/70 mb-12 uppercase">
-          Music Producer & Mixing Engineer
+          {data.home.tagline}
         </p>
 
         <motion.div
