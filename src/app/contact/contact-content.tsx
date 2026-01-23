@@ -1,8 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Instagram, Twitter, Music } from "lucide-react";
+import { Mail, Instagram, Music, Youtube } from "lucide-react";
 import { SiteContent } from "@/lib/site/content";
+
+const socials = [
+  { icon: Instagram, href: "https://www.instagram.com/madebycharlesky?igsh=YW9xZzFla24wZHlz" },
+  { icon: Youtube, href: "https://www.youtube.com/@cosyjetsessions" },
+  { icon: Music, href: "https://open.spotify.com/artist/36XbeR8QfreZv8Nb7JI00S?si=GKAEUIEcSFOCGndTCkArKQ/" },
+  { icon: Mail, href: "mailto:contact@charlesky.com" },
+];
 
 export function ContactContent({ data }: { data: SiteContent }) {
   return (
@@ -25,15 +32,12 @@ export function ContactContent({ data }: { data: SiteContent }) {
         </a>
 
         <div className="flex justify-center gap-8 pt-12">
-            {[
-                data.contact.socials.instagram && { icon: Instagram, href: data.contact.socials.instagram },
-                data.contact.socials.twitter && { icon: Twitter, href: data.contact.socials.twitter },
-                (data.contact.socials.spotify || data.contact.socials.soundcloud) && { icon: Music, href: data.contact.socials.spotify || data.contact.socials.soundcloud || "#" },
-                { icon: Mail, href: `mailto:${data.contact.email}` },
-            ].filter(Boolean).map((social, index) => social && (
+            {socials.map((social, index) => (
                 <motion.a
                     key={index}
                     href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.2, rotate: 5 }}
                     whileTap={{ scale: 0.9 }}
                     className="p-4 bg-neutral-900 rounded-full hover:bg-white hover:text-black transition-colors"
