@@ -1,15 +1,11 @@
 import { doc, getDoc } from "firebase/firestore";
 import { firebaseDb } from "@/lib/firebase/client";
 import { defaultSiteContent, type SiteContent } from "@/lib/site/content";
-import { cacheTag } from "next/cache";
 
 const SITE_DOC_ID = "content";
 const SITE_COLLECTION = "site";
 
 export async function getSiteContent(): Promise<SiteContent> {
-  "use cache";
-  cacheTag("site-content");
-
   // Use Firebase data if available, otherwise fallback to defaults
   try {
     const d = doc(firebaseDb, SITE_COLLECTION, SITE_DOC_ID);

@@ -1,7 +1,11 @@
+"use cache";
+
+import { cacheTag } from "next/cache";
 import { ShowList } from "./show-list";
 import { getSiteContent } from "@/lib/site/server-content";
 
 export default async function Live() {
+  cacheTag("site-content");
   const data = await getSiteContent();
 
   return (

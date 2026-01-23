@@ -1,7 +1,10 @@
-import { getSiteContent } from "@/lib/site/server-content";
+"use cache";
+
+import { cacheTag } from "next/cache";import { getSiteContent } from "@/lib/site/server-content";
 import { ProjectList } from "./project-list";
 
 export default async function Work() {
+  cacheTag("site-content");
   const data = await getSiteContent();
 
   return (
