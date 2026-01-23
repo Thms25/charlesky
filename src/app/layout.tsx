@@ -17,7 +17,12 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Charlesky | Music Producer & Mixing Engineer",
-  description: "Portfolio of Charlesky, a music producer and mixing engineer.",
+  description: "Charlesky, a music producer and mixing engineer.",
+  icons: {
+    icon: {
+      url: "/icons/favicon.png",
+    }
+  }
 };
 
 export default function RootLayout({
