@@ -2,12 +2,10 @@
 
 import { motion } from "framer-motion";
 import { MapPin, Ticket } from "lucide-react";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { SiteContent } from "@/lib/site/content";
 
 export function ShowList({ data }: { data: SiteContent }) {
-  const [hoveredShow, setHoveredShow] = useState<string | null>(null);
   const shows = data.live.shows;
 
   return (
@@ -43,8 +41,6 @@ export function ShowList({ data }: { data: SiteContent }) {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
-            onMouseEnter={() => setHoveredShow(show.id)}
-            onMouseLeave={() => setHoveredShow(null)}
             className="group relative border-t border-neutral-800 py-8 transition-colors duration-300 hover:bg-neutral-900/50"
           >
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 px-4">

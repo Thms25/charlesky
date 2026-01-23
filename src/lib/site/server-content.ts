@@ -12,7 +12,6 @@ export async function getSiteContent(): Promise<SiteContent> {
 
   // Use Firebase data if available, otherwise fallback to defaults
   try {
-    console.log("Fetching site content...");
     const d = doc(firebaseDb, SITE_COLLECTION, SITE_DOC_ID);
     const snap = await getDoc(d);
 
