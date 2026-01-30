@@ -53,6 +53,7 @@ export type SiteContent = {
       twitter?: string;
       spotify?: string;
       soundcloud?: string;
+      youtube?: string;
     };
   };
 };

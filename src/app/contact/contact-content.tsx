@@ -1,17 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Instagram, Music, Youtube } from "lucide-react";
+import { Mail, Instagram, Music, Youtube, Twitter, CloudLightning, type LucideIcon } from "lucide-react";
 import { SiteContent } from "@/lib/site/content";
 
-const socials = [
-  { icon: Instagram, href: "https://www.instagram.com/madebycharlesky?igsh=YW9xZzFla24wZHlz" },
-  { icon: Youtube, href: "https://www.youtube.com/@cosyjetsessions" },
-  { icon: Music, href: "https://open.spotify.com/artist/36XbeR8QfreZv8Nb7JI00S?si=GKAEUIEcSFOCGndTCkArKQ/" },
-  { icon: Mail, href: "mailto:contact@charlesky.com" },
-];
-
 export function ContactContent({ data }: { data: SiteContent }) {
+  const socials = [
+    data.contact.socials.instagram && { icon: Instagram, href: data.contact.socials.instagram },
+    data.contact.socials.youtube && { icon: Youtube, href: data.contact.socials.youtube },
+    data.contact.socials.spotify && { icon: Music, href: data.contact.socials.spotify },
+    data.contact.socials.twitter && { icon: Twitter, href: data.contact.socials.twitter },
+    data.contact.socials.soundcloud && { icon: CloudLightning, href: data.contact.socials.soundcloud },
+    // Always show email icon if email exists
+    data.contact.email && { icon: Mail, href: `mailto:${data.contact.email}` },
+  ].filter((s): s is { icon: LucideIcon; href: string } => Boolean(s));
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh]">
       <motion.div
