@@ -7,7 +7,9 @@ import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-const navItems = [
+import { useSiteContent } from "@/lib/site/useSiteContent";
+
+const NAV_ITEMS = [
   { name: "Work", path: "/work" },
   { name: "Live", path: "/live" },
   { name: "Bio", path: "/bio" },
@@ -17,6 +19,12 @@ const navItems = [
 export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const { data } = useSiteContent();
+
+  const navItems = NAV_ITEMS.filter((item) => {
+    if (item.name === "Live" && data.live.shows.length === 0) return false;
+    return true;
+  });
 
   // Prevent scrolling when menu is open
   useEffect(() => {
