@@ -56,6 +56,51 @@ export type SiteContent = {
       youtube?: string;
     };
   };
+  lab: {
+    home: {
+      headline: string;
+      cards: Array<{
+        id: string;
+        title: string;
+        subtitle: string;
+        imageSrc: string;
+        link: string;
+        hidden?: boolean;
+      }>;
+    };
+    gear: {
+        headline: string;
+        sections: Array<{
+            id: string;
+            title: string;
+            items: Array<{
+                id: string;
+                name: string;
+                imageSrc?: string;
+                description?: string;
+            }>;
+        }>;
+    };
+    playlists: {
+        headline: string;
+        items: Array<{
+            id: string;
+            title: string;
+            embedUrl: string;
+            platform: "spotify" | "soundcloud" | "apple_music";
+        }>;
+    };
+    tutorials: {
+        headline: string;
+        items: Array<{
+            id: string;
+            title: string;
+            videoUrl: string;
+            description?: string;
+            thumbnailSrc?: string;
+        }>;
+    };
+  };
 };
 
 export const defaultSiteContent: SiteContent = {
@@ -178,5 +223,45 @@ export const defaultSiteContent: SiteContent = {
     headline: "LET'S WORK TOGETHER",
     email: "contact@charlesky.com",
     socials: {},
+  },
+  lab: {
+    home: {
+      headline: "The Lab",
+      cards: [
+        {
+          id: "1",
+          title: "Gear",
+          subtitle: "My Studio Tools",
+          imageSrc: "https://images.unsplash.com/photo-1598653222000-6b7b7a552625?q=80&w=2070&auto=format&fit=crop",
+          link: "/lab/gear",
+        },
+        {
+          id: "2",
+          title: "Playlists",
+          subtitle: "Curated Sounds",
+          imageSrc: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=2070&auto=format&fit=crop",
+          link: "/lab/playlists",
+        },
+        {
+          id: "3",
+          title: "Tutorials",
+          subtitle: "Production Tips",
+          imageSrc: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop",
+          link: "/lab/tutorials",
+        },
+      ],
+    },
+    gear: {
+        headline: "Studio Gear",
+        sections: [],
+    },
+    playlists: {
+        headline: "Curated Playlists",
+        items: [],
+    },
+    tutorials: {
+        headline: "Production Tutorials",
+        items: [],
+    },
   },
 };
