@@ -1,7 +1,14 @@
-import { ArrowLeft, Radio } from "lucide-react";
-import Link from "next/link";
+"use cache";
 
-export default function page() {
+import { cacheTag } from "next/cache";
+import { getSiteContent } from "@/lib/site/server-content";
+import Link from "next/link";
+import { ArrowLeft, Radio } from "lucide-react";
+
+export default async function PlaylistsPage() {
+  cacheTag("site-content");
+  const data = await getSiteContent();
+
   return (
     <div className="min-h-screen pt-32 pb-20 px-6">
       <div className="max-w-4xl mx-auto">
@@ -15,24 +22,45 @@ export default function page() {
                 <Radio className="w-8 h-8 text-white" />
             </div>
             <div>
-                <h1 className="text-4xl md:text-5xl font-bold tracking-tighter">Playlists</h1>
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tighter">{data.lab.playlists.headline}</h1>
                 <p className="text-xl text-white/60 mt-2">What&apos;s spinning in the studio.</p>
             </div>
         </div>
 
         <div className="mt-12">
-        <div className="space-y-8">
-         <div className="bg-white/5 border border-white/10 rounded-xl p-6 flex flex-col items-center text-center">
-            <div className="w-32 h-32 bg-blue-500/20 rounded-full flex items-center justify-center mb-6">
-                <Radio className="w-12 h-12 text-blue-400" />
-            </div>
-            <h3 className="text-2xl font-bold mb-2">Studio Vibes</h3>
-            <p className="text-white/60 max-w-md mb-6">A curated selection of tracks that inspire my daily workflow. Synthwave, Retrowave, and Dark Pop.</p>
-            <button className="px-6 py-3 bg-[#1DB954] text-black font-bold rounded-full hover:scale-105 transition">
-                Listen on Spotify
-            </button>
-         </div>
-      </div>
+          <div className="space-y-8">
+             {data.lab.playlists.items.length > 0 ? (
+               <div className="grid gap-6">
+                 {data.lab.playlists.items.map((item) => (
+                   <div key={item.id} className="bg-white/5 border border-white/10 rounded-xl p-6">
+                      <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
+                      <div className="w-full overflow-hidden rounded-lg">
+                        {item.embedUrl ? (
+                           <iframe 
+                             src={item.embedUrl} 
+                             width="100%" 
+                             height={item.platform === "spotify" ? "352" : "166"} 
+                             frameBorder="0" 
+                             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                             loading="lazy"
+                             className="w-full"
+                             title={item.title}
+                           ></iframe>
+                        ) : (
+                          <div className="h-40 bg-white/5 flex items-center justify-center text-white/30">
+                            No embed URL provided
+                          </div>
+                        )}
+                      </div>
+                   </div>
+                 ))}
+               </div>
+             ) : (
+                <div className="text-center py-12 text-white/30 border border-white/10 rounded-xl bg-white/5">
+                  No playlists added yet.
+                </div>
+             )}
+          </div>
         </div>
       </div>
     </div>
